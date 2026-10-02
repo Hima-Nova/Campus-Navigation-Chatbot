@@ -1,0 +1,5 @@
+# Campus Navigation Python Intent Classifier
+# Zero external dependencies required (runs out-of-the-box using Python Standard Library)
+# Optional libraries for production deployment:
+# flask>=2.3.0
+# gunicorn>=21.0.0

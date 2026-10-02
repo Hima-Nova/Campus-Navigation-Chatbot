@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusNav AI — AI-Based Smart Campus Wayfinding System</title>
+  <meta name="description" content="Intelligent campus navigation chatbot combining Java OOP, BFS/DFS pathfinding, and Python NLP intent classification." />
+
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- =========================================================================
+       APP HEADER & NAVIGATION
+       ========================================================================= -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#" class="brand-logo" onclick="App.switchTab('home'); return false;">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+            <line x1="9" y1="3" x2="9" y2="18"></line>
+            <line x1="15" y1="6" x2="15" y2="21"></line>
+          </svg>
+        </div>
+        <div class="brand-title">CampusNav <span>AI</span></div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs">
+        <button class="nav-btn active" data-tab="home">🏠 Home</button>
+        <button class="nav-btn" data-tab="chat">💬 AI Assistant</button>
+        <button class="nav-btn" data-tab="navigate">🧭 Navigate</button>
+        <button class="nav-btn" data-tab="map">🗺️ Campus Map</button>
+        <button class="nav-btn" data-tab="locations">📍 Locations</button>
+        <button class="nav-btn" data-tab="visualizer">📊 ADSA Lab</button>
+        <button class="nav-btn" data-tab="admin">⚙️ Admin</button>
+        <button class="nav-btn" data-tab="demo" style="color: var(--secondary-light);">🎯 Viva Demo</button>
+      </nav>
+
+      <!-- Live System Status Badge -->
+      <div class="header-status">
+        <div id="header-health-badge" class="status-badge">
+          <div id="header-health-dot" class="status-dot"></div>
+          <span id="header-health-text">Connecting...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main class="main-content">
+
+    <!-- -------------------------------------------------------------
+         TAB 1: HOME / LANDING
+         ------------------------------------------------------------- -->
+    <section id="tab-home" class="tab-view active">
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="hero-pill">
+            <span>✨ AI-Powered University Wayfinding System</span>
+          </div>
+          <h1 class="hero-heading">
+            Find Your Way Around <br />
+            <span class="gradient-text">Campus With Ease.</span>
+          </h1>
+          <p class="hero-desc">
+            Ask our intelligent assistant for optimal routes, lecture halls, lab locations, office timings, and departmental details using natural conversational queries.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="App.switchTab('chat')">
+              💬 Open AI Assistant
+            </button>
+            <button class="btn-secondary" onclick="App.switchTab('navigate')">
+              🧭 Calculate Route (BFS)
+            </button>
+            <button class="btn-secondary" onclick="App.switchTab('map')">
+              🗺️ Explore Interactive Map
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 700;">🏫 Apex Tech Campus</h3>
+            <span class="status-badge" style="background: rgba(99, 102, 241, 0.2); color: var(--primary-light); border-color: rgba(99, 102, 241, 0.4);">
+              Graph G = (V, E)
+            </span>
+          </div>
+
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+            Autonomous wayfinding engine integrating Python keyword NLP, Java Spring Boot microservice communication, and ADSA unweighted graph traversal.
+          </p>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-num">27</div>
+              <div class="stat-label">Campus Locations (V)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">39</div>
+              <div class="stat-label">Walkway Edges (E)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">BFS</div>
+              <div class="stat-label">Shortest Path O(V+E)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">NLP</div>
+              <div class="stat-label">Intent Classifier</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Academic Pillars Banner -->
+      <div class="pillars-banner">
+        <div class="pillar-card">
+          <span class="pillar-tag">PILLAR 1 &bull; AI</span>
+          <h4 class="pillar-title">Intelligent Agent</h4>
+          <p class="pillar-desc">Natural query understanding, entity extraction, and multi-intent reasoning.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-tag">PILLAR 2 &bull; ADSA</span>
+          <h4 class="pillar-title">Graph Algorithms</h4>
+          <p class="pillar-desc">Manual BFS shortest path and DFS graph traversal implementations.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-tag">PILLAR 3 &bull; OOPJ</span>
+          <h4 class="pillar-title">Java Spring Boot</h4>
+          <p class="pillar-desc">Clean OOP architecture, strategy pattern, encapsulation, and RESTful APIs.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-tag">PILLAR 4 &bull; PYTHON</span>
+          <h4 class="pillar-title">Intent Classifier</h4>
+          <p class="pillar-desc">Dedicated microservice performing rule-based NLP intent classification.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 2: CAMPUS AI ASSISTANT (CHATBOT)
+         ------------------------------------------------------------- -->
+    <section id="tab-chat" class="tab-view">
+      <div class="chat-layout">
+        <!-- Main Chat Area -->
+        <div class="card chat-main-card">
+          <!-- Chat Header -->
+          <div class="chat-header-bar">
+            <div class="chat-bot-info">
+              <div class="bot-avatar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 8V4H8"></path>
+                  <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                  <path d="M2 14h2"></path>
+                  <path d="M20 14h2"></path>
+                  <path d="M15 13v2"></path>
+                  <path d="M9 13v2"></path>
+                </svg>
+              </div>
+              <div class="bot-meta">
+                <h3>Campus AI Assistant</h3>
+                <p>Intelligent Campus Wayfinding & Information Agent</p>
+              </div>
+            </div>
+            <button class="btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" onclick="document.getElementById('chat-history-container').innerHTML='';">
+              🧹 Clear Chat
+            </button>
+          </div>
+
+          <!-- Chat History Stream -->
+          <div id="chat-history-container" class="chat-history">
+            <!-- Welcome Bot Message -->
+            <div class="chat-msg bot">
+              <div class="msg-bubble">
+                <span class="intent-chip">👋 WELCOME AGENT</span>
+                <p>
+                  Hello! I'm your <strong>Campus AI Assistant</strong>. You can ask me questions such as:
+                </p>
+                <div class="chat-actions-row">
+                  <button class="quick-action-btn" onclick="App.handleSendMessage('How do I reach AI Lab from Main Gate?')">
+                    🧭 How do I reach AI Lab from Main Gate?
+                  </button>
+                  <button class="quick-action-btn" onclick="App.handleSendMessage('What are the Library timings?')">
+                    🕒 What are the Library timings?
+                  </button>
+                  <button class="quick-action-btn" onclick="App.handleSendMessage('Where is the Canteen?')">
+                    📍 Where is the Canteen?
+                  </button>
+                  <button class="quick-action-btn" onclick="App.handleSendMessage('Tell me about CSE Department')">
+                    🏢 Tell me about CSE Department
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Bar & Prompt Suggestions -->
+          <div class="chat-input-area">
+            <div class="suggested-prompts-bar">
+              <button class="prompt-pill" onclick="App.handleSendMessage('Route from Main Gate to AI Lab')">
+                📍 Main Gate ➔ AI Lab
+              </button>
+              <button class="prompt-pill" onclick="App.handleSendMessage('Route from Library to Auditorium')">
+                📍 Library ➔ Auditorium
+              </button>
+              <button class="prompt-pill" onclick="App.handleSendMessage('When does the library close?')">
+                🕒 Library Closing Time
+              </button>
+              <button class="prompt-pill" onclick="App.handleSendMessage('Where is the sports ground?')">
+                ⚽ Find Sports Ground
+              </button>
+              <button class="prompt-pill" onclick="App.handleSendMessage('Where is the examination cell?')">
+                📝 Examination Cell
+              </button>
+            </div>
+
+            <div class="input-row">
+              <input
+                type="text"
+                id="chat-input-field"
+                class="chat-input"
+                placeholder="Ask something about the campus (e.g., 'How to go from Block A to Canteen?')..."
+                autocomplete="off"
+              />
+              <button id="btn-send-chat" class="btn-send" title="Send Query">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Sidebar -->
+        <aside class="chat-sidebar">
+          <div class="ai-spec-card">
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">
+              🧠 Intelligent Agent Specs
+            </h4>
+            <ul class="spec-list">
+              <li><strong>NLP Engine:</strong> Python Service (/classify)</li>
+              <li><strong>Intent Classes:</strong> DIRECTIONS, TIMING, GENERAL, LOCATION_SEARCH</li>
+              <li><strong>Pathfinding:</strong> Java BFS Algorithm</li>
+              <li><strong>Graph:</strong> 27 Nodes, 39 Walkways</li>
+              <li><strong>Fallback:</strong> Java Rule-based NLP</li>
+            </ul>
+          </div>
+
+          <div class="ai-spec-card" style="background: rgba(0, 0, 0, 0.25);">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--secondary-light); margin-bottom: 0.4rem;">
+              💡 Try Asking:
+            </h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+              • "Where is the IoT Lab?"<br />
+              • "How do I reach Canteen from Block B?"<br />
+              • "What are the timings of the Principal Office?"<br />
+              • "Details about AI & DS department"
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 3: NAVIGATION (BFS / DFS)
+         ------------------------------------------------------------- -->
+    <section id="tab-navigate" class="tab-view">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 class="section-title">Campus Route Navigator</h2>
+        <p class="section-subtitle">
+          Select starting point and destination to compute optimal campus routes using Graph Pathfinding Algorithms.
+        </p>
+      </div>
+
+      <div class="nav-layout">
+        <!-- Route Selection Form -->
+        <div class="card nav-form-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Route Planner</h3>
+
+          <div class="form-group">
+            <label class="form-label">📍 Starting Location (Source)</label>
+            <select id="nav-source-select" class="form-select">
+              <option value="">Loading locations...</option>
+            </select>
+          </div>
+
+          <div class="swap-btn-row">
+            <button id="btn-swap-locations" class="btn-swap" title="Swap Source & Destination">
+              ⇅
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">🎯 Destination Location</label>
+            <select id="nav-dest-select" class="form-select">
+              <option value="">Loading locations...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">⚡ Graph Traversal Algorithm</label>
+            <div class="algo-switch-group">
+              <div class="algo-radio-card active" data-algo="BFS">
+                <h4>🔵 BFS (Shortest Path)</h4>
+                <p>Guarantees minimum hops in unweighted graph O(V+E)</p>
+              </div>
+              <div class="algo-radio-card" data-algo="DFS">
+                <h4>🟣 DFS (Exploration)</h4>
+                <p>Deep branch-first traversal for ADSA comparison</p>
+              </div>
+            </div>
+          </div>
+
+          <button id="btn-find-route" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+            🧭 Find Route
+          </button>
+        </div>
+
+        <!-- Route Results Container -->
+        <div id="nav-result-container">
+          <div class="card" style="text-align: center; padding: 3rem 1.5rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🧭</div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Ready to Navigate</h3>
+            <p style="color: var(--text-secondary); max-width: 450px; margin: 0 auto;">
+              Select a start and end location on the left, then click <strong>Find Route</strong> to generate step-by-step navigation instructions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 4: INTERACTIVE CAMPUS MAP
+         ------------------------------------------------------------- -->
+    <section id="tab-map" class="tab-view">
+      <div class="map-view-container">
+        <div class="map-toolbar">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700;">🗺️ Interactive Schematic Campus Map</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">
+              Scroll to Zoom &bull; Drag to Pan &bull; Click any node to set route endpoints
+            </p>
+          </div>
+
+          <div class="map-controls-group">
+            <button class="map-btn" onclick="CampusMap.setZoom(CampusMap.zoom + 0.2)">➕ Zoom In</button>
+            <button class="map-btn" onclick="CampusMap.setZoom(CampusMap.zoom - 0.2)">➖ Zoom Out</button>
+            <button class="map-btn" onclick="CampusMap.resetView()">🔄 Reset View</button>
+            <button class="map-btn" onclick="CampusMap.clearRoute()">🧹 Clear Path</button>
+          </div>
+        </div>
+
+        <!-- SVG Map Canvas -->
+        <div class="map-canvas-wrapper">
+          <svg id="campus-svg-map" viewBox="0 0 1000 900"></svg>
+        </div>
+
+        <!-- Map Legend -->
+        <div class="map-legend card" style="padding: 0.75rem 1.25rem;">
+          <span style="font-weight: 700; color: var(--text-primary); margin-right: 0.5rem;">Legend:</span>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #818cf8;"></div> Academic</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #38bdf8;"></div> Laboratories</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #f59e0b;"></div> Admin</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #a855f7;"></div> Library</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #34d399;"></div> Food / Canteen</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #f43f5e;"></div> Hostels</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #fb923c;"></div> Sports</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #10b981; border: 1px solid white;"></div> Start Node</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #f43f5e; border: 1px solid white;"></div> Destination Node</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background: #22d3ee; box-shadow: 0 0 6px #22d3ee;"></div> Active BFS Route</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 5: LOCATIONS DIRECTORY
+         ------------------------------------------------------------- -->
+    <section id="tab-locations" class="tab-view">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 class="section-title">Campus Directory & Facilities</h2>
+        <p class="section-subtitle">
+          Search and explore all 27 academic blocks, research laboratories, administrative offices, and student amenities.
+        </p>
+      </div>
+
+      <div class="directory-controls">
+        <div class="search-box">
+          <span class="search-icon-pos">🔍</span>
+          <input type="text" id="directory-search-input" placeholder="Search by name, block, department, or keyword..." />
+        </div>
+
+        <div class="category-filter-chips">
+          <button class="cat-chip active" data-category="ALL" onclick="App.filterByCategory('ALL')">All</button>
+          <button class="cat-chip" data-category="ACADEMIC" onclick="App.filterByCategory('ACADEMIC')">Academic</button>
+          <button class="cat-chip" data-category="LABORATORY" onclick="App.filterByCategory('LABORATORY')">Labs</button>
+          <button class="cat-chip" data-category="ADMINISTRATION" onclick="App.filterByCategory('ADMINISTRATION')">Admin</button>
+          <button class="cat-chip" data-category="LIBRARY" onclick="App.filterByCategory('LIBRARY')">Library</button>
+          <button class="cat-chip" data-category="FOOD" onclick="App.filterByCategory('FOOD')">Food</button>
+          <button class="cat-chip" data-category="HOSTEL" onclick="App.filterByCategory('HOSTEL')">Hostels</button>
+          <button class="cat-chip" data-category="SPORTS" onclick="App.filterByCategory('SPORTS')">Sports</button>
+        </div>
+      </div>
+
+      <div id="locations-grid-container" class="locations-grid">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 6: ADSA LAB & ALGORITHM VISUALIZER
+         ------------------------------------------------------------- -->
+    <section id="tab-visualizer" class="tab-view">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 class="section-title">ADSA Graph Algorithms & Viva Lab</h2>
+        <p class="section-subtitle">
+          Demonstrating Graph Theory, Breadth-First Search (BFS), Depth-First Search (DFS), and Complexity Analysis.
+        </p>
+      </div>
+
+      <!-- Theory Comparison Cards -->
+      <div class="algo-compare-grid">
+        <div class="algo-card">
+          <span class="hero-pill">ALGORITHM 1</span>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Breadth-First Search (BFS)</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            BFS explores vertices layer-by-layer using a <strong>First-In, First-Out (FIFO) Queue</strong>. It visits all 1-hop neighbors before proceeding to 2-hop neighbors, guaranteeing the <strong>shortest path</strong> (minimum edges) in unweighted graphs.
+          </p>
+
+          <table class="complexity-table">
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>Time Complexity</td>
+              <td><code>O(V + E)</code></td>
+            </tr>
+            <tr>
+              <td>Space Complexity</td>
+              <td><code>O(V)</code></td>
+            </tr>
+            <tr>
+              <td>Data Structure</td>
+              <td>Queue (FIFO) + Visited Set + Parent Map</td>
+            </tr>
+            <tr>
+              <td>Shortest Path Guarantee</td>
+              <td>✅ Yes (for unweighted graphs)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="algo-card">
+          <span class="hero-pill" style="background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); border-color: rgba(168, 85, 247, 0.3);">ALGORITHM 2</span>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Depth-First Search (DFS)</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+            DFS explores as deep as possible along each branch before <strong>backtracking</strong> using recursion or a <strong>LIFO Stack</strong>. Useful for cycle detection and connectivity, but does not guarantee the shortest path.
+          </p>
+
+          <table class="complexity-table">
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>Time Complexity</td>
+              <td><code>O(V + E)</code></td>
+            </tr>
+            <tr>
+              <td>Space Complexity</td>
+              <td><code>O(V)</code> (Recursion Call Stack)</td>
+            </tr>
+            <tr>
+              <td>Data Structure</td>
+              <td>Recursion Stack + Visited Set</td>
+            </tr>
+            <tr>
+              <td>Shortest Path Guarantee</td>
+              <td>❌ No (Exploratory / Traversal)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Live Interactive Comparison Tool -->
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;">
+          🔬 Live Algorithm Comparator (BFS vs DFS)
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Pick two campus nodes to run both BFS and DFS simultaneously and observe differences in path length and hop count.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: flex-end;">
+          <div class="form-group">
+            <label class="form-label">Start Point</label>
+            <select id="compare-source-select" class="form-select"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Destination</label>
+            <select id="compare-dest-select" class="form-select"></select>
+          </div>
+          <button id="btn-run-comparison" class="btn-primary" style="height: 44px;">
+            ⚡ Run Comparison
+          </button>
+        </div>
+
+        <div id="comparison-result-box"></div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 7: ADMIN & GRAPH MANAGER
+         ------------------------------------------------------------- -->
+    <section id="tab-admin" class="tab-view">
+      <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 class="section-title">Campus Graph Administration</h2>
+          <p class="section-subtitle">
+            Manage vertices (locations), walkway edges, and reload campus topological data in real-time.
+          </p>
+        </div>
+        <button id="btn-admin-reload-graph" class="btn-secondary">
+          🔄 Reload Graph from JSON
+        </button>
+      </div>
+
+      <div class="admin-grid">
+        <!-- Add Location Form -->
+        <div class="card">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">➕ Register New Campus Location (Vertex)</h3>
+          <form id="admin-add-location-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Location Name</label>
+              <input type="text" id="admin-loc-name" class="form-input" placeholder="e.g. Robotics Center" required />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">Category</label>
+                <select id="admin-loc-cat" class="form-select">
+                  <option value="ACADEMIC">Academic</option>
+                  <option value="LABORATORY">Laboratory</option>
+                  <option value="ADMINISTRATION">Administration</option>
+                  <option value="LIBRARY">Library</option>
+                  <option value="FOOD">Food / Dining</option>
+                  <option value="HOSTEL">Hostel</option>
+                  <option value="SPORTS">Sports</option>
+                  <option value="AMENITIES">Amenities</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Block & Floor</label>
+                <input type="text" id="admin-loc-block" class="form-input" placeholder="e.g. Block A" />
+                <input type="hidden" id="admin-loc-floor" value="First Floor" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <input type="text" id="admin-loc-desc" class="form-input" placeholder="Facility description..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Operating Timings</label>
+              <input type="text" id="admin-loc-timings" class="form-input" placeholder="e.g. 8:30 AM - 5:30 PM" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Aliases (Comma separated for NLP matching)</label>
+              <input type="text" id="admin-loc-aliases" class="form-input" placeholder="robotics lab, maker space" />
+            </div>
+            <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">
+              Save Campus Location
+            </button>
+          </form>
+        </div>
+
+        <!-- Add Edge Form -->
+        <div class="card">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">🔗 Add Walkway Connection (Edge)</h3>
+          <form id="admin-add-edge-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Source Node</label>
+              <input type="text" id="admin-edge-src" class="form-input" placeholder="e.g. Main Gate" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Destination Node</label>
+              <input type="text" id="admin-edge-dst" class="form-input" placeholder="e.g. Block A" required />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="form-group">
+                <label class="form-label">Distance (Meters)</label>
+                <input type="number" id="admin-edge-dist" class="form-input" value="100" min="10" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Walk Time (Minutes)</label>
+                <input type="number" id="admin-edge-time" class="form-input" value="2" min="1" />
+              </div>
+            </div>
+            <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">
+              Add Walkway Edge
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Graph Data Tables -->
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">📋 Active Campus Vertices (Locations)</h3>
+        <div class="data-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Block</th>
+                <th>Floor</th>
+                <th>Timings</th>
+              </tr>
+            </thead>
+            <tbody id="admin-locations-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------
+         TAB 8: DEMO SHOWCASE (VIVA CARDS)
+         ------------------------------------------------------------- -->
+    <section id="tab-demo" class="tab-view">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 class="section-title">🎯 Viva Demonstration Hub</h2>
+        <p class="section-subtitle">
+          Predefined test cases and academic question prompts for examiners, professors, and project reviews.
+        </p>
+      </div>
+
+      <div class="demo-grid">
+        <!-- Demo Card 1 -->
+        <div class="demo-card" onclick="App.switchTab('chat'); App.handleSendMessage('How do I reach the AI Lab from Main Gate?');">
+          <span class="demo-tag">CASE 1 &bull; BFS SHORTEST PATH</span>
+          <h4 style="font-size: 1.05rem; font-weight: 700;">Main Gate ➔ AI Lab</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Tests DIRECTIONS intent classification, entity extraction of source/destination, and execution of BFS shortest path.
+          </p>
+        </div>
+
+        <!-- Demo Card 2 -->
+        <div class="demo-card" onclick="App.switchTab('chat'); App.handleSendMessage('What are the library timings?');">
+          <span class="demo-tag">CASE 2 &bull; TIMING INTENT</span>
+          <h4 style="font-size: 1.05rem; font-weight: 700;">Library Operating Hours</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Tests TIMING intent classification, alias resolution for 'library', and schedule synthesis.
+          </p>
+        </div>
+
+        <!-- Demo Card 3 -->
+        <div class="demo-card" onclick="App.switchTab('chat'); App.handleSendMessage('Tell me about the CSE department.');">
+          <span class="demo-tag">CASE 3 &bull; GENERAL INFO INTENT</span>
+          <h4 style="font-size: 1.05rem; font-weight: 700;">CSE Department Overview</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Tests GENERAL intent classification and retrieval of block, floor, and computing facilities.
+          </p>
+        </div>
+
+        <!-- Demo Card 4 -->
+        <div class="demo-card" onclick="App.switchTab('chat'); App.handleSendMessage('Where is the canteen?');">
+          <span class="demo-tag">CASE 4 &bull; LOCATION SEARCH</span>
+          <h4 style="font-size: 1.05rem; font-weight: 700;">Find Campus Canteen</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Tests LOCATION_SEARCH intent, location coordinates, and "Navigate Here" action.
+          </p>
+        </div>
+
+        <!-- Demo Card 5 -->
+        <div class="demo-card" onclick="App.switchTab('chat'); App.handleSendMessage('Route from Central Library to Main Auditorium');">
+          <span class="demo-tag">CASE 5 &bull; ACROSS-CAMPUS WALK</span>
+          <h4 style="font-size: 1.05rem; font-weight: 700;">Library ➔ Auditorium</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Traverses from academic wing to cultural center across multiple intermediate nodes.
+          </p>
+        </div>
+
+        <!-- Demo Card 6 -->
+        <div class="demo-card" onclick="App.switchTab('visualizer');">
+          <span class="demo-tag" style="background: rgba(168, 85, 247, 0.15); color: var(--accent-purple);">CASE 6 &bull; ADSA COMPARATOR</span>
+          <h4 style="font-size: 1.05rem; font-weight: 700;">BFS vs DFS Comparison</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Demonstrates theoretical and empirical differences between BFS (queue) and DFS (stack).
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       APP FOOTER
+       ========================================================================= -->
+  <footer class="app-footer">
+    <p>
+      <strong>Campus Navigation Chatbot</strong> &bull; Academic Project demonstrating <strong>AI, ADSA, OOPJ & Python</strong> &bull; Apex Tech Campus
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

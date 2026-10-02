@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  python-classifier:
+    build:
+      context: ./python-classifier
+      dockerfile: Dockerfile
+    container_name: campus-python-classifier
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    networks:
+      - campus-net
+
+  backend-java:
+    build:
+      context: ./backend-java
+      dockerfile: Dockerfile
+    container_name: campus-backend-java
+    ports:
+      - "8080:8080"
+    environment:
+      - PYTHON_CLASSIFIER_URL=http://python-classifier:5000/classify
+      - PYTHON_CLASSIFIER_HEALTH_URL=http://python-classifier:5000/health
+    depends_on:
+      - python-classifier
+    networks:
+      - campus-net
+
+networks:
+  campus-net:
+    driver: bridge

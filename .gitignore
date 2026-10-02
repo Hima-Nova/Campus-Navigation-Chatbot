@@ -1,0 +1,28 @@
+# Maven
+backend-java/target/
+**/target/
+*.class
+*.jar
+*.war
+
+# Python
+python-classifier/__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS and logs
+*.log
+.DS_Store
+Thumbs.db
