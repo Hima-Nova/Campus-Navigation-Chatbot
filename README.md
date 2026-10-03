@@ -1,4 +1,6 @@
 # Campus Navigation Chatbot — AI-Based Smart Campus Wayfinding System
+## 🚀 Live Demo
+👉 [Open Live Demo](https://campus-navigation-chatbot-xeu0.onrender.com)
 
 An intelligent campus navigation and wayfinding web application designed to help new students, faculty, and visitors explore lecture halls, research laboratories, academic departments, administrative offices, libraries, hostels, and dining facilities.
 
